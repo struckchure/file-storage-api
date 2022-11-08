@@ -31,17 +31,14 @@ jobs:
       - name: Build image and push to Docker Hub and GitHub Container Registry
         uses: docker/build-push-action@v2
         with:
-          # relative path to the place where source code with Dockerfile is located
           context: .
-          # Note: tags has to be all lower-case
           tags: |
             struckchure/file_storage:latest
             struckchure/file_storage:${{ github.ref_name }}
 
             ghcr.io/${{ github.repository_owner }}/file_storage:latest
             ghcr.io/${{ github.repository_owner }}/file_storage:${{ github.ref_name }}
-          # build on feature branches, push only on main branch
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: true
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
