@@ -1,0 +1,10 @@
+site_name: File Storage
+
+theme:
+  name: readthedocs
+  highlightjs: true
+
+docs_dir: pages
+
+nav:
+  - Home: index.md
