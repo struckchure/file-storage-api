@@ -1,0 +1,32 @@
+name: Docker Image CI
+
+on:
+  push:
+    tags: v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Authenticate with docker hub credentials
+        run: |
+          docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Build the Docker image
+        run: |
+          docker build --tag struckchure/file_storage_api:${{ github.ref_name}} .
+          docker build --tag struckchure/file_storage_api:latest .
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+
+    steps:
+      - name: Push built image to docker hub
+        run:  |
+          docker push struckchure/file_storage_api:${{ github.ref_name}}
+          docker push struckchure/file_storage_api:latest
