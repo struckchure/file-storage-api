@@ -1,6 +1,6 @@
 # File Storage API
 
-Rome wasn't built in a day, but `file_storage_api` was 😅\
+Rome wasn't built in a day, but `file_storage_api` was 😅
 
 This is a simple API for storing files. It is designed to be used with the [File Storage Client](https://github.com/struckchure/file-storage-client).
 
