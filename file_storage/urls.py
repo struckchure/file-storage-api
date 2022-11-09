@@ -12,7 +12,7 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="App's API",
+      title="File Storage API",
       default_version='v1',
       description="Some description",
       terms_of_service="https://www.google.com/policies/terms/",
