@@ -1,5 +1,7 @@
 # File Storage API
 
+[![Docker Image CI](https://github.com/struckchure/file_storage_api/actions/workflows/docker-image.yml/badge.svg)](https://github.com/struckchure/file_storage_api/actions/workflows/docker-image.yml)
+
 Rome wasn't built in a day, but `file_storage_api` was 😅
 
 This is a simple API for storing files. It is designed to be used with the [File Storage Client](https://github.com/struckchure/file-storage-client).
