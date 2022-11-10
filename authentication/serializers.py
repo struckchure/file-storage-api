@@ -1,34 +1,43 @@
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, get_user_model, login
+from file_storage import exceptions
+from rest_framework import serializers, status
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """Customizes JWT default Serializer to add more information about user"""
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
+User = get_user_model()
 
-        # Add custom claims
-        token['username'] = user.username
-        # ...
-
-        return token
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(max_length=255, min_length=1, required=False)
+    last_name = serializers.CharField(max_length=255, min_length=1, required=False)
+    email = serializers.EmailField(max_length=255, min_length=6, required=False)
     password = serializers.CharField(max_length=100, min_length=4, write_only=True)
-    email=serializers.EmailField(max_length=255, min_length=6)
-    first_name=serializers.CharField(max_length=255, min_length=1)
-    last_name=serializers.CharField(max_length=255, min_length=1)
-    
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'password']
+        fields = ["username", "email", "first_name", "last_name", "password"]
 
-    def validate(self, args):
-        email = args.get('email', None)
-        username = args.get('username', None)
-        if User.objects.filter(email=email).exists():
-            raise serializers.ValidationError({"Email": "Email taken"})
-        if User.objects.filter(username=username).exists():
-            raise serializers.ValidationError({"Username": "Username taken"})
-        return super().validate(args)
+    def create(self, validated_data):
+        password = validated_data.pop("password")
+
+        user = User.objects.create(**validated_data)
+        user.set_password(password)
+        user.save()
+
+        return user
+
+
+class LoginSerializer(serializers.Serializer):
+
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True, style={"input_type": "password"})
+
+    def create(self, validated_data):
+        user = authenticate(**validated_data)
+        if not user:
+            raise exceptions.Exception(
+                "Invalid credentials", code=status.HTTP_401_UNAUTHORIZED
+            )
+
+        if self.context.get("request"):
+            login(self.context["request"], user)
+
+        return user

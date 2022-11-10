@@ -15,10 +15,10 @@ def handle_errors():
             try:
                 return func(*args, **kwargs)
             except exceptions.Exception as error:
-                error = error.__dict__() or error.__str__()
+                message = error.__dict__() or error.__str__()
                 code = getattr(error, "code", status.HTTP_400_BAD_REQUEST)
 
-                return Response({"error": error}, status=code)
+                return Response({"error": message}, status=code)
             except APIException as error:
                 code = getattr(error, "code", status.HTTP_400_BAD_REQUEST)
 
