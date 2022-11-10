@@ -1,8 +1,7 @@
+from core.models import File
+from core.serializers.file_serializer import FileSerializer
 from file_storage import exceptions
 from file_storage.utils import get_object_or_raise_error
-
-from core.models import File
-from core.serializers import FileSerializer
 
 
 def get_host_url(request):

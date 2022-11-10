@@ -1,9 +1,8 @@
+from core.services.file_service import FileUploadService
 from file_storage.decorators import handle_errors
 from file_storage.utils import BaseView
 from rest_framework import status
 from rest_framework.response import Response
-
-from core.service import FileUploadService
 
 file_upload_service = FileUploadService()
 

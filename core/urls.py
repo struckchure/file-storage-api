@@ -1,6 +1,6 @@
 from django.urls import path
-from core.api import ListCreateFileAPI, GetUpdateDeleteFileAPI
 
+from core.api.file_api import GetUpdateDeleteFileAPI, ListCreateFileAPI
 
 app_name = "core"
 
