@@ -1,10 +1,11 @@
-from django.contrib.auth.models import User
+from core.serializers.authentication_serializers import (
+    LoginSerializer,
+    RegistrationSerializer,
+)
 from file_storage.decorators import handle_errors
+from file_storage.utils import get_tokens_for_user
 from rest_framework import generics, status
 from rest_framework.response import Response
-
-from authentication.serializers import LoginSerializer, RegistrationSerializer
-from authentication.utils import get_tokens_for_user
 
 
 class RegistrationAPIView(generics.GenericAPIView):

@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     "corsheaders",
     # local
     "core",
-    "authentication",
 ]
 
 MIDDLEWARE = [
