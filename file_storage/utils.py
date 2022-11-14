@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from file_storage import exceptions
 
@@ -28,3 +29,12 @@ def get_object_or_raise_error(model, **kwargs):
         raise exceptions.Exception(
             "%s does not exist" % model.__name__, code=status.HTTP_404_NOT_FOUND
         )
+
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+
+    return {
+        "refresh_token": str(refresh),
+        "access_token": str(refresh.access_token),
+    }
