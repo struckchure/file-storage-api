@@ -37,7 +37,7 @@ PyJWT==2.6.0
 pyparsing==3.0.9
 python-dotenv==0.21.0
 pytz==2022.6
-requests==2.31.0
+requests==2.32.2
 ruamel.yaml==0.17.21
 ruamel.yaml.clib==0.2.7
 six==1.16.0
